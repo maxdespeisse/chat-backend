@@ -3,7 +3,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello world!</h1>');
+  res.sendStatus(200);
 });
 
 let messages = [];
@@ -15,8 +15,10 @@ io.on('connection', socket => {
 
   socket.on('chat message', message => {
     console.log(`New message ${message}`);
-    messages.push(message);
-    io.emit('chat message', message);
+    if (message.trim()) {
+      messages.push(message);
+      io.emit('chat message', message);
+    }
   });
 
   socket.on('disconnect', () => {
