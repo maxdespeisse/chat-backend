@@ -16,7 +16,7 @@ io.on('connection', socket => {
 
   socket.on('chat message', message => {
     console.log(`New message ${message}`);
-    if (message.trim()) {
+    if (message && message.trim()) {
       messages.push(message);
       io.emit('chat message', message);
     }
